@@ -1,0 +1,14 @@
+<h1>Type your request here:</h1>
+
+<%= form_tag('/index/search', method: 'post') do %>
+  <%= text_field_tag :request %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<% if @result %>
+  <%= @result.site_data.rank %>
+  <br>
+  <%= @result.site_data.url %>
+  <br>
+  <%= @result.result %>
+<% end %>
