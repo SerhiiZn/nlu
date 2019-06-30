@@ -19,7 +19,7 @@
 
 console.log($('.open_mod'));
 $(document).on('click', '.open_mod', function (e) {
-    let cur = '#' + $(this).attr('data-number')
+    var cur = '#' + $(this).attr('data-number')
     $(cur).show()
 });
 $(document).on('click', '.modal', function (e) {
