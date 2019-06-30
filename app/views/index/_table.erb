@@ -10,23 +10,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr role="tablist">
-      <th scope="">
+    <tr role="tablist row">
+      <th style="width: 40%;">
         <a href="<%= site_data.url %>"><%= site_data.url %></a>
       </th>
-      <td class=""><%= site_data.rank %></td>
-      <td class="">2</td>
+      <td style="width: 25%;"><%= site_data.rank %></td>
+      <td style="width: 25%;">2</td>
       <td class="text-right" style="width: 180px">
-        <a class="btn btn-primary" href="#ex1" rel="modal:open">
+        <button class="btn btn-primary open_mod" data-number="ex<%= site_data.rank %>">
           Details
-        </a>
+        </button>
       </td>
     </tr>
     </tbody>
   </table>
-
+  <div class="modal-wrapper">
   <% site_data.analizes.each do |analize| %>
-    <div class="modal" id="ex1" class="modal">
+    <div class="modal mb-3" id="ex<%= site_data.rank %>">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
@@ -34,7 +34,7 @@
               <tbody>
               <tr role="tablist">
                 <th scope="">
-                  Type
+                  Type:
                 </th>
                 <td class="">
                   <% analize.result['entities'].each do |entity| %>
@@ -44,7 +44,7 @@
               </tr>
               <tr role="tablist">
                 <th scope="">
-                  Language
+                  Language:
                 </th>
                 <td class="">
                   <%= analize.result['language'] %>
@@ -52,42 +52,37 @@
               </tr>
               <tr>
                 <th>Emotion:</th>
-                <td></td>
+                <td><%= analize.result['entities'][0]&.dig('sentiment', 'label') || 0%></td>
               </tr>
               <tr>
-                <th>Sadness</th>
+                <th>Sadness:</th>
                 <td>
-                  <%= analize.result['entities'][0].dig('emotion', 'sadness')%>
+                  <%= analize.result['entities'][0]&.dig('emotion', 'sadness') || 0 %>
+                </td>
+              </tr>
+              <tr class="joy">
+                <th>Joy:</th>
+                <td>
+                  <%= analize.result['entities'][0]&.dig('emotion','joy') || 0 %>
+                  <div class="chart"></div>
                 </td>
               </tr>
               <tr>
-                <th>Joy</th>
+                <th>Fear:</th>
                 <td>
-                  <%= analize.result['entities'][0].dig('emotion','joy')%>
+                  <%= analize.result['entities'][0]&.dig('emotion','fear') || 0 %>
                 </td>
               </tr>
               <tr>
-                <th>Fear</th>
+                <th>Disgust:</th>
                 <td>
-                  <%= analize.result['entities'][0].dig('emotion','fear')%>
+                  <%= analize.result['entities'][0]&.dig('emotion', 'disgust') || 0 %>
                 </td>
               </tr>
               <tr>
-                <th>Disgust</th>
+                <th>Anger:</th>
                 <td>
-                  <%= analize.result['entities'][0].dig('emotion', 'disgust')%>
-                </td>
-              </tr>
-              <tr>
-                <th>Anger</th>
-                <td>
-                  <%= analize.result['entities'][0].dig('emotion', 'anger')%>
-                </td>
-              </tr>
-              <tr>
-                <th>Anger</th>
-                <td>
-                  <%= analize.result['entities'][0].dig('sentiment', 'label')%>
+                  <%= analize.result['entities'][0]&.dig('emotion', 'anger') || 0%>
                 </td>
               </tr>
               </tbody>
@@ -97,5 +92,6 @@
       </div>
     </div>
   <% end %>
+  </div>
 <% end %>
 
