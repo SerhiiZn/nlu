@@ -4,7 +4,9 @@ class IndexController < ApplicationController
   end
 
   def search
-    @result = ::Nlu.new(params[:request]).call
-    redirect_to index_show_path(result: @result.id)
+    operation = ::Nlu.new(params[:request])
+    @result = operation.call
+    redirect_to index_show_path(result: @result),
+                flash: { error: operation.errors.join(', ') }
   end
 end
