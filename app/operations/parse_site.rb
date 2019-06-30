@@ -21,7 +21,6 @@ class ParseSite
     doc = Nokogiri::HTML(site_body(url))
     doc.css('script', 'style').remove
     @text = doc.css('div', 'p').map(&:content).join(' ')
-               .force_encoding('iso8859-1')
                .encode('utf-8')
   end
 
