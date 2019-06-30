@@ -20,8 +20,8 @@ class ParseSite
   def get_text
     doc = Nokogiri::HTML(site_body(url))
     doc.css('script', 'style').remove
-    doc.xpath('//text()').find_all { |t| t.to_s.strip == '' }.map(&:remove)
     @text = doc.css('div', 'p').map(&:content).join(' ')
+               .encode('utf-8')
   end
 
   def get_rank
