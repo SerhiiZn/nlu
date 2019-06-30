@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a demo application using Watson Natural Language Understanding
+for text analysis.
 
-Things you may want to cover:
+Communication with Watson through ibm_watson gem
 
-* Ruby version
+Requests to the external sites performed with Typhoeus gem
 
-* System dependencies
+Page parsing and crawling - Nokogiri
 
-* Configuration
+ruby: 2.5.3
 
-* Database creation
+rails: 5.1.7
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+pg: 1.1.4
