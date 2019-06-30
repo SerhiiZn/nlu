@@ -1,95 +1,101 @@
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">Site</th>
-    <th scope="col">Rank</th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr role="tablist">
-    <th scope="">
-      <a href="<%= @result.site_data.url %>"><%= @result.site_data.url %></a>
-    </th>
-    <td class=""><%= @result.site_data.rank %></td>
-    <td class="">2</td>
-    <td class="text-right" style="width: 180px">
-      <a class="btn btn-primary" href="#ex1" rel="modal:open">
-        Details
-      </a>
-    </td>
-  </tr>
-  </tbody>
-</table>
 
-<div class="modal" id="ex1" class="modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <table class="table table-striped">
-          <tbody>
-            <tr role="tablist">
-              <th scope="">
-                Type
-              </th>
-              <td class="">
-                <% @result.result['entities'].each do |entity| %>
-                  <%= entity['type'] %>
-                <% end %>
-              </td>
-            </tr>
-            <tr role="tablist">
-              <th scope="">
-                Language
-              </th>
-              <td class="">
-                <%= @result.result['language'] %>
-              </td>
-            </tr>
-            <tr>
-              <th>Emotion:</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>Sadness</th>
-              <td>
-                <%= @result.result['entities'][0]['emotion']['sadness']%>
-              </td>
-            </tr>
-            <tr>
-              <th>Joy</th>
-              <td>
-                <%= @result.result['entities'][0]['emotion']['joy']%>
-              </td>
-            </tr>
-            <tr>
-              <th>Fear</th>
-              <td>
-                <%= @result.result['entities'][0]['emotion']['fear']%>
-              </td>
-            </tr>
-            <tr>
-              <th>Disgust</th>
-              <td>
-                <%= @result.result['entities'][0]['emotion']['disgust']%>
-              </td>
-            </tr>
-            <tr>
-              <th>Anger</th>
-              <td>
-                <%= @result.result['entities'][0]['emotion']['anger']%>
-              </td>
-            </tr>
-            <tr>
-              <th>Anger</th>
-              <td>
-                <%= @result.result['entities'][0]['sentiment']['label']%>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<% @result.each do |site_data| %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Site</th>
+      <th scope="col">Rank</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr role="tablist">
+      <th scope="">
+        <a href="<%= site_data.url %>"><%= site_data.url %></a>
+      </th>
+      <td class=""><%= site_data.rank %></td>
+      <td class="">2</td>
+      <td class="text-right" style="width: 180px">
+        <a class="btn btn-primary" href="#ex1" rel="modal:open">
+          Details
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <% site_data.analizes.each do |analize| %>
+    <div class="modal" id="ex1" class="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <table class="table table-striped">
+              <tbody>
+              <tr role="tablist">
+                <th scope="">
+                  Type
+                </th>
+                <td class="">
+                  <% analize.result['entities'].each do |entity| %>
+                    <%= entity['type'] %>
+                  <% end %>
+                </td>
+              </tr>
+              <tr role="tablist">
+                <th scope="">
+                  Language
+                </th>
+                <td class="">
+                  <%= analize.result['language'] %>
+                </td>
+              </tr>
+              <tr>
+                <th>Emotion:</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Sadness</th>
+                <td>
+                  <%= analize.result['entities'][0].dig('emotion', 'sadness')%>
+                </td>
+              </tr>
+              <tr>
+                <th>Joy</th>
+                <td>
+                  <%= analize.result['entities'][0].dig('emotion','joy')%>
+                </td>
+              </tr>
+              <tr>
+                <th>Fear</th>
+                <td>
+                  <%= analize.result['entities'][0].dig('emotion','fear')%>
+                </td>
+              </tr>
+              <tr>
+                <th>Disgust</th>
+                <td>
+                  <%= analize.result['entities'][0].dig('emotion', 'disgust')%>
+                </td>
+              </tr>
+              <tr>
+                <th>Anger</th>
+                <td>
+                  <%= analize.result['entities'][0].dig('emotion', 'anger')%>
+                </td>
+              </tr>
+              <tr>
+                <th>Anger</th>
+                <td>
+                  <%= analize.result['entities'][0].dig('sentiment', 'label')%>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  <% end %>
+<% end %>
+
