@@ -50,9 +50,12 @@ class Nlu
         limit: 2
       }
     }).result
+  rescue IBMCloudSdkCore::ApiException => e
+    @errors << e.to_s
   end
 
   def save_result
+    return unless errors.blank?
     Analize.create(site_data: @data, result: @response).id
   end
 end
