@@ -1,14 +1,17 @@
-<h1>Type your request here:</h1>
-
-<%= form_tag('/index/search', method: 'post') do %>
-  <%= text_field_tag :request %>
-  <%= submit_tag 'Search' %>
+<% if flash[:error] %>
+  <p><%= flash[:error] %></p>
 <% end %>
 
+<div class="mb-2 mt-3">
+  <%= form_tag('/index/search', method: 'post',class: 'form-inline') do %>
+    <div class="form-group mb-2 mx-sm-3">
+      <label for="search_input" class="sr-only">Link -></label>
+      <%= text_field_tag :request, '',class: 'form-control', id: 'search_input' %>
+    </div>
+    <%= submit_tag 'Search', class: 'btn btn-primary mb-2' %>
+  <% end %>
+</div>
+
 <% if @result %>
-  <%= @result.site_data.rank %>
-  <br>
-  <%= @result.site_data.url %>
-  <br>
-  <%= @result.result %>
+  <%= render 'table' %>
 <% end %>

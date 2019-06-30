@@ -1,12 +1,15 @@
 # Tool for parsing site data
 class ParseSite
-  attr_accessor :url
+  attr_accessor :url, :errors
 
   def initialize(url)
     @url = url
+    @errors = []
   end
 
   def call
+    check_url
+    return unless errors.blank?
     get_text
     get_rank
     create_record
@@ -34,5 +37,10 @@ class ParseSite
     data = SiteDatum.where(url: url).first_or_create
     data.update(rank: @rank, content: @text)
     data
+  end
+
+  def check_url
+    return if SiteDatum.valid_url?(url)
+    @errors << 'Please enter valid url'
   end
 end

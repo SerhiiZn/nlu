@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.5.3'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -11,6 +13,8 @@ gem 'pg'
 gem 'rails', '~> 5.1.7'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+gem 'bootstrap', '~> 4.0.0'
+gem 'jquery-rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Typhoeus for request
@@ -41,6 +45,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'factory_bot_rails'
+  gem 'rspec-its'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
 end
 

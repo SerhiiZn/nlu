@@ -5,14 +5,16 @@ require 'ibm_watson/natural_language_understanding_v1'
 class Nlu
   include IBMWatson
 
-  attr_accessor :url
+  attr_accessor :url, :errors
 
   def initialize(url)
     @url = url
+    @errors = []
   end
 
   def call
     get_data
+    return unless errors.blank?
     configure_watson
     get_response
     save_result
@@ -21,7 +23,9 @@ class Nlu
   private
 
   def get_data
-    @data = ::ParseSite.new(url).call
+    operation = ::ParseSite.new(url)
+    @data = operation.call
+    @errors = operation.errors
   end
 
   def configure_watson
@@ -33,6 +37,7 @@ class Nlu
   end
 
   def get_response
+    return @response = '' if @data.content.blank?
     @response = @watson.analyze(text: @data.content, features: {
       entities: {
         emotion: true,
@@ -44,10 +49,10 @@ class Nlu
         sentiment: true,
         limit: 2
       }
-    })
+    }).result
   end
 
   def save_result
-    Analize.create(site_data: @data, result: @response.result)
+    Analize.create(site_data: @data, result: @response).id
   end
 end
