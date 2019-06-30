@@ -22,7 +22,7 @@ class ParseSite
     doc.css('script', 'style').remove
     doc.xpath('//text()').find_all { |t| t.to_s.strip == '' }.map(&:remove)
     @text = doc.css('div', 'p').map(&:content).join(' ')
-               .encode('utf-8')
+               .encode('UTF-8', invalid: :replace, undef: :replace)
   end
 
   def get_rank
