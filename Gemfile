@@ -12,7 +12,7 @@ gem 'pg'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.7'
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 4.3'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 # Use SCSS for stylesheets
